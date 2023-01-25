@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+   font-family: "Eurostile";
+   src: url("../public/fonts/EurostileNext/EurostileNextLTProBoldExt\ \(Linotype\)\ [2012].otf");
+}
+
+@layer base {
+   h1,
+   h2,
+   h3,
+   button,
+   a {
+      font-family: "Eurostile";
+   }
+
+   body {
+      overflow-x: hidden;
+   }
+}
+
+.bg-home-hero {
+   background: linear-gradient(344deg, #ff1509 32%, rgba(255, 255, 255, 1) 32%);
+}
