@@ -11,7 +11,7 @@ const CardProduct = ({ shoeInfo }: { shoeInfo: ShoesProducts }) => {
             <motion.span className="h-full w-full " whileHover={{ rotate: 30, scale: 1.2 }}>
                <Image
                   className="h-full  w-full object-contain drop-shadow-2xl transition-transform"
-                  src={image.src}
+                  src={`https://eccomerce-api-next.vercel.app/${image.src}`}
                   width={300}
                   height={170}
                   alt={name}

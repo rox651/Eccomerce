@@ -16,7 +16,7 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
          </div>
          <Image
             className="h-full w-full object-contain"
-            src={image.src}
+            src={`https://eccomerce-api-next.vercel.app/${image.src}`}
             width={300}
             height={300}
             alt={`${name} - Cart`}
