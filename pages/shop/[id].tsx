@@ -34,7 +34,7 @@ const Product: NextPage<productProps> = ({ id }) => {
             <Image
                className="h-[250px] w-full object-contain drop-shadow-2xl  md:h-full"
                src={
-                  data?.image ||
+                  data?.image.src ||
                   "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FNike-Joyride-Cushioning-Black-1-removebg-preview.26486054.png&w=640&q=75"
                }
                width={550}
