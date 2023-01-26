@@ -34,7 +34,7 @@ const Product: NextPage<productProps> = ({ id }) => {
             <Image
                className="h-[250px] w-full object-contain drop-shadow-2xl  md:h-full"
                src={
-                  `https://eccomerce-api-next.vercel.app/${data?.image.src}` ||
+                  `https://eccomerce-api-next.vercel.app${data?.image.src}` ||
                   "https://eccomerce-api-next.vercel.app/_next/static/media/Nike-Joyride-Cushioning-Black-1-removebg-preview.26486054.png"
                }
                width={550}
