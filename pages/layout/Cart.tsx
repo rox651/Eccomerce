@@ -12,14 +12,11 @@ const Cart = () => {
 
    return (
       <section
-         className={clsx(
-            classConditional,
-            "fixed left-0 top-0 z-50 grid h-full w-full grid-cols-3 bg-black/50 sm:grid-cols-4"
-         )}
+         className={clsx(classConditional, "fixed left-0 top-0 z-50  h-full w-full  bg-black/50 ")}
          onClick={setIsOpen}
       >
          <article
-            className="relative col-start-2 col-end-4 h-full w-full space-y-3 overflow-y-auto bg-white p-5 sm:col-start-4"
+            className="absolute right-0 top-0 h-full w-2/3 sm:w-1/2 space-y-3 overflow-y-auto bg-white p-5 lg:w-1/3 "
             onClick={e => e.stopPropagation()}
          >
             <h2>Cart Products</h2>

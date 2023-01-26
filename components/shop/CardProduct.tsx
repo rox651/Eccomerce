@@ -8,7 +8,7 @@ const CardProduct = ({ shoeInfo }: { shoeInfo: ShoesProducts }) => {
    return (
       <Link href={`/shop/${id}`} className="h-full w-full">
          <article className="relative grid min-h-[340px] w-full place-items-center rounded-lg  bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 shadow-lg">
-            <motion.span className="h-full w-full" whileHover={{ rotate: 30, scale: 1.2 }}>
+            <motion.span className="h-full w-full " whileHover={{ rotate: 30, scale: 1.2 }}>
                <Image
                   className="h-full  w-full object-contain drop-shadow-2xl transition-transform"
                   src={image}

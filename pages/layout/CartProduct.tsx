@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { ShoesForCart } from "@/types";
 import { useQuantityInCart } from "@/hooks";
 
@@ -21,17 +22,29 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             alt={`${name} - Cart`}
          />
          <div className="col-span-2 my-3 grid grid-cols-3 text-center">
-            <button onClick={decrementProduct} className="bg-slate-800  px-3 text-white">
+            <motion.button
+               whileTap={{ scale: 0.7 }}
+               onClick={decrementProduct}
+               className="bg-slate-800  px-3 text-white"
+            >
                -
-            </button>
+            </motion.button>
             <strong>{shoeInfo.quantity}</strong>
-            <button onClick={incrementProduct} className="bg-slate-800  px-3  text-white">
+            <motion.button
+               whileTap={{ scale: 0.7 }}
+               onClick={incrementProduct}
+               className="bg-slate-800  px-3  text-white"
+            >
                +
-            </button>
+            </motion.button>
          </div>
-         <button className=" col-span-2 bg-red-500 text-white" onClick={removeCartProduct}>
+         <motion.button
+            whileTap={{ scale: 0.7 }}
+            className=" col-span-2 bg-red-500 text-white"
+            onClick={removeCartProduct}
+         >
             Remove item
-         </button>
+         </motion.button>
       </div>
    );
 };

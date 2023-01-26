@@ -2,7 +2,7 @@ import { ShoesProducts } from "@/types";
 import axios from "axios";
 
 export const instance = axios.create({
-   baseURL: "http://localhost:3000/api",
+   baseURL: "https://eccomerce-api-next.vercel.app/api",
 });
 
 export const getShoes = async () => {

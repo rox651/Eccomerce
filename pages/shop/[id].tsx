@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useMemo } from "react";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { getShoe, getShoes } from "@/lib";
 import { ShoesProducts } from "@/types";
 import { useCartStore } from "@/store";
@@ -29,9 +30,9 @@ const product: NextPage<productProps> = ({ id }) => {
             <title>{title}</title>
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <section className="relative grid h-[calc(100vh-4rem)] w-full grid-cols-2 place-items-center bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 shadow-lg">
+         <section className="relative grid h-[calc(100vh-4rem)] w-full place-items-center bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 px-5 shadow-lg md:grid-cols-2">
             <Image
-               className="h-auto w-full object-contain  drop-shadow-2xl"
+               className="h-[250px] w-full object-contain drop-shadow-2xl  md:h-full"
                src={
                   data?.image ||
                   "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FNike-Joyride-Cushioning-Black-1-removebg-preview.26486054.png&w=640&q=75"
@@ -40,22 +41,31 @@ const product: NextPage<productProps> = ({ id }) => {
                height={470}
                alt={data?.name || "product undefined"}
             />
-            <article>
+            <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
                   <small className="text-xl font-medium">${data?.basePrice}</small>
                   <h3 className=" text-4xl font-bold">{data?.name}</h3>
                   <small className="text-xl font-medium">{data?.size}</small>
                </div>
-               <div className="mx-auto mb-5 space-x-2 font-['Eurostile'] text-2xl text-white ">
-                  <button onClick={decrementQuantity} className="bg-slate-800 px-3 ">
+               <div className=" mb-5  space-x-2 font-['Eurostile'] text-2xl text-white ">
+                  <motion.button
+                     whileTap={{ scale: 0.7 }}
+                     onClick={decrementQuantity}
+                     className="bg-slate-800 px-3 "
+                  >
                      -
-                  </button>
+                  </motion.button>
                   <strong>{quantity}</strong>
-                  <button onClick={incrementQuantity} className="bg-slate-800 px-3  ">
+                  <motion.button
+                     whileTap={{ scale: 0.7 }}
+                     onClick={incrementQuantity}
+                     className="bg-slate-800 px-3  "
+                  >
                      +
-                  </button>
+                  </motion.button>
                </div>
                <button
+                  className=" -order-1 md:order-1"
                   onClick={() => {
                      addProduct(data, quantity, false);
                      setTotal();
