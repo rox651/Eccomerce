@@ -7,7 +7,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
-import { Cart, Header } from "./layout";
+import { Cart, Header } from "@/components/";
 
 const pagesTransitions = {
    initialState: {
