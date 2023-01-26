@@ -11,7 +11,7 @@ import { useQuantity } from "@/hooks";
 
 type productProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const product: NextPage<productProps> = ({ id }) => {
+const Product: NextPage<productProps> = ({ id }) => {
    const { data } = useQuery({
       queryKey: ["shoe", id],
       queryFn: getShoe,
@@ -103,4 +103,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
    return { paths: shoePaths, fallback: "blocking" };
 };
 
-export default product;
+export default Product;
