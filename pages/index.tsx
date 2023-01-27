@@ -9,6 +9,7 @@ const Home: NextPage = () => {
             <title>Nike Store</title>
             <link rel="icon" href="/favicon.ico" />
          </Head>
+
          <HeroHome />
       </>
    );

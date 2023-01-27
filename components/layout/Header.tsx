@@ -15,14 +15,11 @@ const Header = () => {
             <Link href="/shop">Shop</Link>
          </nav>
          <div>
-            <div className="relative">
-               <span className="absolute right-2 cursor-default grid h-7 w-7 place-items-center rounded-full bg-red-500 text-white">
+            <div onClick={setIsOpen} className="relative cursor-pointer">
+               <span className="absolute right-2 grid h-7 w-7 place-items-center rounded-full bg-red-500 text-white">
                   {totalQuantity}
                </span>
-               <AiOutlineShopping
-                  onClick={setIsOpen}
-                  className="h-[40px] w-[80px] cursor-pointer"
-               />
+               <AiOutlineShopping className="h-[40px] w-[80px] " />
             </div>
          </div>
       </header>

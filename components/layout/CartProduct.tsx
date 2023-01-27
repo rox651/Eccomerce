@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion} from "framer-motion";
 import { ShoesForCart } from "@/types";
 import { useQuantityInCart } from "@/hooks";
 
@@ -25,7 +25,7 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
          />
          <div className="col-span-2 my-3 grid grid-cols-3 text-center">
             <motion.button
-               whileTap={{ scale: 0.7, willChange: "transform" }}
+               whileTap={{ scale: 0.7}}
                onClick={decrementProduct}
                className="bg-slate-800  px-3 text-white"
             >
@@ -33,7 +33,7 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             </motion.button>
             <strong>{shoeInfo.quantity}</strong>
             <motion.button
-               whileTap={{ scale: 0.7, willChange: "transform" }}
+               whileTap={{ scale: 0.7}}
                onClick={incrementProduct}
                className="bg-slate-800  px-3  text-white"
             >

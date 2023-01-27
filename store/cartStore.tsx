@@ -29,10 +29,6 @@ export const useCartStore = create<CartState>()(
                toast.success("New product added", {
                   position: "bottom-left",
                   autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  theme: "dark",
                });
                return;
             }
@@ -57,10 +53,6 @@ export const useCartStore = create<CartState>()(
                toast.success(`Product update - ${findProduct.quantity} products now`, {
                   position: "bottom-left",
                   autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  theme: "dark",
                });
          },
          removeProduct: id => {
@@ -71,10 +63,6 @@ export const useCartStore = create<CartState>()(
             toast.info("Product removed", {
                position: "bottom-left",
                autoClose: 2000,
-               hideProgressBar: false,
-               closeOnClick: true,
-               pauseOnHover: true,
-               theme: "dark",
             });
          },
          setTotal: () => {

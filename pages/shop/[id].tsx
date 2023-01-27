@@ -51,7 +51,8 @@ const Product: NextPage<productProps> = ({ id }) => {
                </div>
                <div className=" mb-5  space-x-2 font-['Eurostile'] text-2xl text-white ">
                   <motion.button
-                     whileTap={{ scale: 0.7,  willChange: "transform" }}
+                     initial={{ scale: 1 }}
+                     whileTap={{ scale: 0.7 }}
                      onClick={decrementQuantity}
                      className="bg-slate-800 px-3 "
                   >
@@ -59,6 +60,7 @@ const Product: NextPage<productProps> = ({ id }) => {
                   </motion.button>
                   <strong>{quantity}</strong>
                   <motion.button
+                     initial={{ scale: 1 }}
                      whileTap={{ scale: 0.7 }}
                      onClick={incrementQuantity}
                      className="bg-slate-800 px-3  "
@@ -66,15 +68,17 @@ const Product: NextPage<productProps> = ({ id }) => {
                      +
                   </motion.button>
                </div>
-               <button
-                  className=" -order-1 md:order-1"
+               <motion.button
+                  initial={{ scale: 1 }}
+                  whileTap={{ scale: 0.7 }}
+                  className=" -order-1 inline-block  bg-slate-800 px-10 py-2 text-sm text-white md:order-1 lg:text-base"
                   onClick={() => {
                      addProduct(data, quantity, false);
                      setTotal();
                   }}
                >
                   Add to the cart
-               </button>
+               </motion.button>
             </article>
          </section>
       </>

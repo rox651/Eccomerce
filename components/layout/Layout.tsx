@@ -16,10 +16,9 @@ const Layout = ({ children }: { children: ReactElement }) => {
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
+            pauseOnFocusLoss={false}
             draggable
             pauseOnHover
-            theme="dark"
          />
       </>
    );
