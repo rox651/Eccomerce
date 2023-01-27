@@ -8,11 +8,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
 import { Cart, Header } from "@/components/";
+import Layout from "@/components/layout/Layout";
 
 const pagesTransitions = {
    initialState: {
       opacity: 0,
-      clipPath: "circle(0% at 50% 50%)",
    },
    animateState: {
       opacity: 1,
@@ -39,21 +39,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                   transition={{ duration: 0.75 }}
                   variants={pagesTransitions}
                >
-                  <Header />
-                  <Cart />
-                  <Component {...pageProps} />
-                  <ToastContainer
-                     position="bottom-left"
-                     autoClose={5000}
-                     hideProgressBar={false}
-                     newestOnTop={false}
-                     closeOnClick
-                     rtl={false}
-                     pauseOnFocusLoss
-                     draggable
-                     pauseOnHover
-                     theme="dark"
-                  />
+                  <Layout>
+                     <Component {...pageProps} />
+                  </Layout>
                </motion.main>
                <ReactQueryDevtools />
             </AnimatePresence>

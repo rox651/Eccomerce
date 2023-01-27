@@ -52,14 +52,16 @@ export const useCartStore = create<CartState>()(
             });
 
             set({ products: updateProducts });
-            toast.success(`Product update - ${findProduct.quantity} products now`, {
-               position: "bottom-left",
-               autoClose: 5000,
-               hideProgressBar: false,
-               closeOnClick: true,
-               pauseOnHover: true,
-               theme: "dark",
-            });
+
+            if (!isProductFromCart)
+               toast.success(`Product update - ${findProduct.quantity} products now`, {
+                  position: "bottom-left",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  theme: "dark",
+               });
          },
          removeProduct: id => {
             const currentProducts = get().products;

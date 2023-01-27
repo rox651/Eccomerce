@@ -17,13 +17,15 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
          <Image
             className="h-full w-full object-contain"
             src={`https://eccomerce-api-next.vercel.app${image.src}`}
-            width={300}
-            height={300}
+            width={image.width}
+            height={image.height}
+            placeholder="blur"
+            blurDataURL={image.blurDataURL}
             alt={`${name} - Cart`}
          />
          <div className="col-span-2 my-3 grid grid-cols-3 text-center">
             <motion.button
-               whileTap={{ scale: 0.7 }}
+               whileTap={{ scale: 0.7, willChange: "transform" }}
                onClick={decrementProduct}
                className="bg-slate-800  px-3 text-white"
             >
@@ -31,7 +33,7 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             </motion.button>
             <strong>{shoeInfo.quantity}</strong>
             <motion.button
-               whileTap={{ scale: 0.7 }}
+               whileTap={{ scale: 0.7, willChange: "transform" }}
                onClick={incrementProduct}
                className="bg-slate-800  px-3  text-white"
             >

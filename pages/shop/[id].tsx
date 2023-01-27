@@ -40,6 +40,8 @@ const Product: NextPage<productProps> = ({ id }) => {
                width={550}
                height={470}
                alt={data?.name || "product undefined"}
+               placeholder="blur"
+               blurDataURL={data?.image.blurDataURL}
             />
             <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
@@ -49,7 +51,7 @@ const Product: NextPage<productProps> = ({ id }) => {
                </div>
                <div className=" mb-5  space-x-2 font-['Eurostile'] text-2xl text-white ">
                   <motion.button
-                     whileTap={{ scale: 0.7 }}
+                     whileTap={{ scale: 0.7,  willChange: "transform" }}
                      onClick={decrementQuantity}
                      className="bg-slate-800 px-3 "
                   >
