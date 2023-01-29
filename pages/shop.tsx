@@ -1,29 +1,33 @@
-import { GetStaticProps, NextPage } from "next";
+import { GetStaticProps, NextPage, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ShopProducts } from "@/components";
 import { getShoes } from "@/lib";
+import { ShoesProducts } from "@/types";
 
-const shop: NextPage = () => {
-   const { data: shoes } = useQuery({ queryKey: ["shoes"], queryFn: getShoes });
+type shopPage = InferGetStaticPropsType<typeof getStaticProps>;
+const shop: NextPage<shopPage> = ({ shoes }) => {
+   const { data } = useQuery({
+      queryKey: ["shoes"],
+      queryFn: getShoes,
+      initialData: shoes,
+   });
    return (
       <>
          <Head>
             <title>Shop - Nike Store</title>
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <ShopProducts shoes={shoes} />
+         <ShopProducts shoes={data} />
       </>
    );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-   const queryClient = new QueryClient();
-
-   await queryClient.prefetchQuery(["shoes"], getShoes);
+   const shoes: ShoesProducts[] = await getShoes();
    return {
       props: {
-         dehydratedState: dehydrate(queryClient),
+         shoes,
       },
    };
 };

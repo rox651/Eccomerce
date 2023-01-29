@@ -16,7 +16,7 @@ const Cart = () => {
          onClick={setIsOpen}
       >
          <article
-            className="absolute right-0 top-0 h-full w-2/3 sm:w-1/2 space-y-3 overflow-y-auto bg-white p-5 lg:w-1/3 "
+            className="absolute right-0 top-0 h-full w-2/3 space-y-3 overflow-y-auto bg-white p-5 sm:w-1/2 lg:w-1/3 "
             onClick={e => e.stopPropagation()}
          >
             <h2>Cart Products</h2>
@@ -42,4 +42,4 @@ const Cart = () => {
    );
 };
 
-export default dynamic(() => Promise.resolve(Cart), { ssr: false });
+export default Cart;

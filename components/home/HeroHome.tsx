@@ -30,11 +30,12 @@ const HeroHome = () => {
                transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
             >
                <Image
-                  className=" h-[350px] object-contain lg:h-full lg:w-4/5 xl:w-full"
+                  className="  object-contain  "
                   src={NikeShows}
                   width={500}
                   priority={true}
                   height={500}
+                  
                   alt="nike shoes"
                />
             </motion.span>

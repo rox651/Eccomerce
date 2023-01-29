@@ -26,4 +26,4 @@ const Header = () => {
    );
 };
 
-export default dynamic(() => Promise.resolve(Header), { ssr: false });
+export default Header;

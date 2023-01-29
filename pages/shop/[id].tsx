@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPag
 import Head from "next/head";
 import Image from "next/image";
 import { useMemo } from "react";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { getShoe, getShoes } from "@/lib";
 import { ShoesProducts } from "@/types";
@@ -11,13 +11,11 @@ import { useQuantity } from "@/hooks";
 
 type productProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Product: NextPage<productProps> = ({ id }) => {
+const Product: NextPage<productProps> = ({ id, shoe }) => {
    const { data } = useQuery({
       queryKey: ["shoe", id],
       queryFn: getShoe,
-      refetchOnWindowFocus: false,
-      staleTime: 200000,
-      retry: 3,
+      initialData: shoe,
    });
    const title = useMemo(() => `${data?.name} - Nike Store`, [data]);
 
@@ -86,13 +84,12 @@ const Product: NextPage<productProps> = ({ id }) => {
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-   const queryClient = new QueryClient();
-
-   await queryClient.prefetchQuery(["shoe", params?.id], getShoe);
+   const shoes: ShoesProducts[] = await getShoes();
+   const shoe = shoes.filter(shoe => shoe.id === params?.id);
 
    return {
       props: {
-         dehydratedState: dehydrate(queryClient),
+         shoe: shoe[0],
          id: params?.id,
       },
    };
