@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                animate="animate"
                exit="exit"
                variants={pageAnimations}
-               transition={{ duration: 0.5}}
+               transition={{ duration: 0.3 }}
             >
                <Layout>
                   <Component {...pageProps} />
