@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { AiFillDelete } from "react-icons/ai";
 import { ShoesForCart } from "@/types";
 import { useQuantityInCart } from "@/hooks";
 
@@ -31,7 +32,8 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             <motion.button
                whileTap={{ scale: 0.7 }}
                onClick={decrementProduct}
-               className="bg-slate-800  px-3 text-white"
+               className="bg-slate-800  py-1 px-3 text-white disabled:opacity-80"
+               disabled={shoeInfo.quantity === 1}
             >
                -
             </motion.button>
@@ -39,18 +41,18 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             <motion.button
                whileTap={{ scale: 0.7 }}
                onClick={incrementProduct}
-               className="bg-slate-800  px-3  text-white"
+               className="bg-slate-800  py-1 px-3  text-white"
             >
                +
             </motion.button>
+            <motion.button
+               whileTap={{ scale: 0.7 }}
+               className=" bg-red-500 text-white mt-2 py-1"
+               onClick={removeCartProduct}
+            >
+               <AiFillDelete className=" mx-auto" />
+            </motion.button>
          </div>
-         <motion.button
-            whileTap={{ scale: 0.7 }}
-            className=" col-span-2 bg-red-500 text-white"
-            onClick={removeCartProduct}
-         >
-            Remove item
-         </motion.button>
       </div>
    );
 };

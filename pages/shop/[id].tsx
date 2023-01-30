@@ -55,8 +55,7 @@ const Product: NextPage<productProps> = ({ id }) => {
                      initial={{ scale: 1 }}
                      whileTap={{ scale: 0.7 }}
                      onClick={decrementQuantity}
-                     className="bg-slate-800 px-3  disabled:opacity-70"
-                     disabled={quantity === 1}
+                     className="bg-slate-800 px-3  "
                   >
                      -
                   </motion.button>
