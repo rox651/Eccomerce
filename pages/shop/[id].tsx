@@ -39,6 +39,7 @@ const Product: NextPage<productProps> = ({ id }) => {
                alt={data?.name || "product undefined"}
                placeholder="blur"
                blurDataURL={data?.image.blurDataURL}
+               priority={true}
             />
             <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
