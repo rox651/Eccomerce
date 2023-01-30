@@ -43,7 +43,10 @@ const Product: NextPage<productProps> = ({ id }) => {
             />
             <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
-                  <small className="text-xl font-medium">${data?.basePrice}<br/></small>
+                  <small className="text-xl font-medium">
+                     ${data?.basePrice}
+                     <br />
+                  </small>
                   <h3 className=" text-4xl font-bold">{data?.name}</h3>
                   <small className="text-xl font-medium">{data?.size}</small>
                </div>
@@ -52,7 +55,8 @@ const Product: NextPage<productProps> = ({ id }) => {
                      initial={{ scale: 1 }}
                      whileTap={{ scale: 0.7 }}
                      onClick={decrementQuantity}
-                     className="bg-slate-800 px-3 "
+                     className="bg-slate-800 px-3  disabled:opacity-70"
+                     disabled={quantity === 1}
                   >
                      -
                   </motion.button>

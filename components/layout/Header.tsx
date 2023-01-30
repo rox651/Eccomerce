@@ -16,7 +16,9 @@ const Header = () => {
 
    return (
       <header className="sticky top-0 z-50 flex h-[4rem] w-full  items-center justify-between bg-white/80 px-5 backdrop-blur-3xl">
-         <NikeLogo />
+         <Link href="/">
+            <NikeLogo />
+         </Link>
          <nav className="flex flex-1 justify-center gap-5 font-medium">
             <Link href="/">Home</Link>
             <Link href="/shop">Shop</Link>
