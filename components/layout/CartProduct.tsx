@@ -4,15 +4,19 @@ import { ShoesForCart } from "@/types";
 import { useQuantityInCart } from "@/hooks";
 
 const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
-   const { image, name, price, size } = shoeInfo;
+   const { image, basePrice, name, price, size } = shoeInfo;
    const { incrementProduct, decrementProduct, removeCartProduct } = useQuantityInCart(shoeInfo);
 
    return (
       <div className="grid grid-cols-2 items-center rounded-lg border border-slate-700 p-2 shadow-xl">
          <div className=" grid">
             <h3>{name}</h3>
-            <strong>{size}</strong>
-            <span>${price}</span>
+            <span>
+               <strong>Base price:</strong> ${basePrice}
+            </span>
+            <span>
+               <strong>Sub total:</strong> ${price}
+            </span>
          </div>
          <Image
             className="h-full w-full object-contain"

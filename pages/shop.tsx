@@ -1,16 +1,15 @@
 import { GetStaticProps, NextPage, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { ShopProducts } from "@/components";
 import { getShoes } from "@/lib";
 import { ShoesProducts } from "@/types";
 
 type shopPage = InferGetStaticPropsType<typeof getStaticProps>;
-const shop: NextPage<shopPage> = ({ shoes }) => {
+const shop: NextPage<shopPage> = () => {
    const { data } = useQuery({
       queryKey: ["shoes"],
       queryFn: getShoes,
-      initialData: shoes,
    });
    return (
       <>
@@ -24,10 +23,11 @@ const shop: NextPage<shopPage> = ({ shoes }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-   const shoes: ShoesProducts[] = await getShoes();
+   const queryClient = new QueryClient();
+   await queryClient.prefetchQuery(["shoes"], getShoes);
    return {
       props: {
-         shoes,
+         dehydratedState: dehydrate(queryClient),
       },
    };
 };

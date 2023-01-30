@@ -1,17 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { ShoesProducts } from "@/types";
 import { motion } from "framer-motion";
 
 const CardProduct = ({ shoeInfo }: { shoeInfo: ShoesProducts }) => {
    const { id, image, name, basePrice, size } = shoeInfo;
+   const shoeImageVariant = {
+      initial: {
+         cale: 1,
+         rotate: 0,
+      },
+      hover: {
+         scale: 1.2,
+         rotate: 30,
+      },
+   };
+
    return (
       <Link href={`/shop/${id}`} className="h-full w-full">
          <article className="relative grid min-h-[340px] w-full place-items-center rounded-lg  bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 shadow-lg">
             <motion.span
                className="h-full w-full "
-               initial={{ scale: 1, rotate: 0 }}
-               whileHover={{ scale: 1.2, rotate: 30 }}
+               variants={shoeImageVariant}
+               initial="initial"
+               whileHover="hover"
             >
                <Image
                   className=" object-contain drop-shadow-2xl transition-transform"

@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPag
 import Head from "next/head";
 import Image from "next/image";
 import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { getShoe, getShoes } from "@/lib";
 import { ShoesProducts } from "@/types";
@@ -11,11 +11,10 @@ import { useQuantity } from "@/hooks";
 
 type productProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Product: NextPage<productProps> = ({ id, shoe }) => {
+const Product: NextPage<productProps> = ({ id }) => {
    const { data } = useQuery({
       queryKey: ["shoe", id],
       queryFn: getShoe,
-      initialData: shoe,
    });
    const title = useMemo(() => `${data?.name} - Nike Store`, [data]);
 
@@ -43,7 +42,7 @@ const Product: NextPage<productProps> = ({ id, shoe }) => {
             />
             <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
-                  <small className="text-xl font-medium">${data?.basePrice}</small>
+                  <small className="text-xl font-medium">${data?.basePrice}<br/></small>
                   <h3 className=" text-4xl font-bold">{data?.name}</h3>
                   <small className="text-xl font-medium">{data?.size}</small>
                </div>
@@ -84,12 +83,13 @@ const Product: NextPage<productProps> = ({ id, shoe }) => {
 };
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-   const shoes: ShoesProducts[] = await getShoes();
-   const shoe = shoes.filter(shoe => shoe.id === params?.id);
+   const queryClient = new QueryClient();
+
+   await queryClient.prefetchQuery(["shoe", params?.id], getShoe);
 
    return {
       props: {
-         shoe: shoe[0],
+         dehydratedState: dehydrate(queryClient),
          id: params?.id,
       },
    };
