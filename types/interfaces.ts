@@ -24,3 +24,8 @@ export interface CartState {
    removeProduct: (id: string) => void;
    setTotal: () => void;
 }
+
+export interface FormRegisterData {
+   email: string;
+   password: string;
+}
