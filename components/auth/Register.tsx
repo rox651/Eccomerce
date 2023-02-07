@@ -4,18 +4,11 @@ import { FormRegisterData } from "@/types";
 import { GithubIcon, GoogleIcon, NikeLogo } from "../icons";
 import { createUser } from "@/lib";
 
-
 const Register = () => {
-   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-   } = useForm<FormRegisterData>();
+   const { register, handleSubmit } = useForm<FormRegisterData>();
 
    const onSubmit = handleSubmit(data => {
-      const { email, password } = data;
-
-      createUser({email, password});
+      createUser(data);
    });
 
    return (
@@ -71,6 +64,7 @@ const Register = () => {
                      Sign up
                   </button>
                </form>
+
 
                <div className="mt-6">
                   <div className="relative">

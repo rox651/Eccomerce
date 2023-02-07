@@ -21,12 +21,3 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 
-export const createUser = async ({ email, password }: FormRegisterData) => {
-   try {
-      const response = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(response);
-   } catch (e: any) {
-      const errorCode = e.code;
-      const errorMessage = e.message;
-   }
-};
