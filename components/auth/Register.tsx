@@ -1,18 +1,48 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import clsx from "clsx";
+
+import { auth, createUser } from "@/lib";
 import { FormRegisterData } from "@/types";
-import { GithubIcon, GoogleIcon, NikeLogo } from "../icons";
-import { createUser } from "@/lib";
+
+import { NikeLogo } from "../icons";
 
 const Register = () => {
-   const { register, handleSubmit } = useForm<FormRegisterData>();
+   const route = useRouter();
+   const [user] = useAuthState(auth);
 
-   const onSubmit = handleSubmit(data => {
-      createUser(data);
+   const { mutate, isLoading } = useMutation({
+      mutationFn: createUser,
+      onSuccess: () =>
+         toast.success(`User created`, {
+            position: "bottom-center",
+         }),
+      onError: () =>
+         toast.error("System error, try again", {
+            position: "bottom-center",
+         }),
    });
+   const { register, handleSubmit } = useForm<FormRegisterData>();
+   const onSubmit = handleSubmit(data => mutate(data));
+
+   useEffect(() => {
+      if (user) {
+         route.push("/");
+      }
+   }, [user]);
 
    return (
-      <section className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <section
+         className={clsx(
+            isLoading && "opacity-30",
+            "flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8"
+         )}
+      >
          <article className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="grid place-items-center">
                <NikeLogo />
@@ -51,7 +81,7 @@ const Register = () => {
                      </div>
                   </div>
 
-                  <div className=" text-center text-xs">
+                  <div className=" text-center text-sm">
                      <Link href="/login" className="font-medium  text-red-600 hover:text-red-500">
                         Sign in if you already have an account
                      </Link>
@@ -64,40 +94,6 @@ const Register = () => {
                      Sign up
                   </button>
                </form>
-
-
-               <div className="mt-6">
-                  <div className="relative">
-                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-300" />
-                     </div>
-                     <div className="relative flex justify-center text-sm">
-                        <span className="bg-white px-2 text-gray-500">Or continue with</span>
-                     </div>
-                  </div>
-
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-                     <div>
-                        <a
-                           href="#"
-                           className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-red-600/70 shadow-sm hover:bg-gray-50 hover:text-red-600"
-                        >
-                           <span className="sr-only">Sign up with Google</span>
-                           <GoogleIcon />
-                        </a>
-                     </div>
-
-                     <div>
-                        <a
-                           href="#"
-                           className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-red-600/70 shadow-sm hover:bg-gray-50 hover:text-red-600"
-                        >
-                           <span className="sr-only">Sign up with GitHub</span>
-                           <GithubIcon />
-                        </a>
-                     </div>
-                  </div>
-               </div>
             </div>
          </div>
       </section>

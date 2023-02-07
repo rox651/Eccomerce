@@ -5,8 +5,11 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider, Hydrate } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "@/components/layout/Layout";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
    const [queryClient] = useState(
       new QueryClient({
          defaultOptions: {

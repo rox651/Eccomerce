@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
             position="bottom-left"
             autoClose={5000}
             hideProgressBar={false}
-            newestOnTop={false}
+            newestOnTop={true}
             closeOnClick
             rtl={false}
             pauseOnFocusLoss={false}

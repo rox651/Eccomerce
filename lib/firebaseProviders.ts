@@ -1,19 +1,17 @@
 import { FormRegisterData } from "@/types";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { toast } from "react-toastify";
-import { auth } from "./firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "./firebaseConfig";
 
 export const createUser = async ({ email, password }: FormRegisterData) => {
-   try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+   const response = await createUserWithEmailAndPassword(auth, email, password);
+   return response;
+};
+export const loginUser = async ({ email, password }: FormRegisterData) => {
+   const response = await signInWithEmailAndPassword(auth, email, password);
+   return response;
+};
 
-      if (user)
-         toast.success(`User created`, {
-            autoClose: 5000,
-         });
-   } catch (e: any) {
-      toast.error(e.message, {
-         autoClose: 5000,
-      });
-   }
+export const loginUserWithGoogle = async () => {
+   const response = await signInWithPopup(auth, googleProvider);
+   return response;
 };
