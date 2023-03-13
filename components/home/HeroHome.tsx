@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HeroHome = () => {
    return (
-      <section className="bg-home-hero h-[calc(100vh-4rem)]  px-5">
+      <section className="bg-home-hero lg:h-[calc(100vh-4rem)]  px-5">
          <div className="mx-auto grid h-full max-w-7xl place-items-center overflow-hidden lg:grid-cols-2">
             <article className=" space-y-3 lg:space-y-5 ">
                <h1 className="text-3xl font-bold lg:text-6xl">

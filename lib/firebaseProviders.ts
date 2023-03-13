@@ -1,6 +1,10 @@
 import { FormRegisterData } from "@/types";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "./firebaseConfig";
+import {
+   createUserWithEmailAndPassword,
+   signInWithEmailAndPassword,
+   signInWithPopup,
+} from "firebase/auth";
+import { auth,  googleProvider } from "./firebaseConfig";
 
 export const createUser = async ({ email, password }: FormRegisterData) => {
    const response = await createUserWithEmailAndPassword(auth, email, password);

@@ -1,15 +1,16 @@
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import clsx from "clsx";
 import { useCartStore } from "@/store";
 import CartProduct from "./CartProduct";
 import MessageCart from "./MessageCart";
 
+
 const Cart = () => {
    const { products, totalPrice, totalQuantity, isOpen, setIsOpen } = useCartStore();
+   
    const classConditional = useMemo(() => !isOpen && "hidden", [isOpen]);
    const isThereProducts = useMemo(() => products.length > 0, [products]);
-
    return (
       <section
          className={clsx(classConditional, "fixed left-0 top-0 z-50  h-full w-full  bg-black/50 ")}

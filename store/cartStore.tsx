@@ -2,7 +2,8 @@ import { CartState, ShoesForCart } from "@/types";
 import { create } from "zustand";
 import { toast } from "react-toastify";
 import { persist } from "zustand/middleware";
-import { setTotalData } from "@/lib";
+import { auth, db, setTotalData } from "@/lib";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 export const useCartStore = create<CartState>()(
    persist(
@@ -11,7 +12,6 @@ export const useCartStore = create<CartState>()(
          totalPrice: 0,
          totalQuantity: 0,
          isOpen: false,
-         setIsOpen: () => set(state => ({ isOpen: !state.isOpen })),
          addProduct: (product, quantity, isProductFromCart) => {
             //search if the product already exists
             const currentProducts = get().products;
@@ -30,17 +30,16 @@ export const useCartStore = create<CartState>()(
                   position: "bottom-left",
                   autoClose: 2000,
                });
+
                return;
             }
 
             //update product if exists
             const updateProducts = currentProducts.map(updateProduct => {
                if (updateProduct.id === findProduct.id) {
-                  findProduct.quantity += quantity;
-                  //if the product come from the cart, just redefine the quantity
-                  if (isProductFromCart) {
-                     findProduct.quantity = quantity;
-                  }
+                  findProduct.quantity = isProductFromCart
+                     ? quantity
+                     : findProduct.quantity + quantity;
                   findProduct.price = product.basePrice * findProduct.quantity;
                   return findProduct;
                }
@@ -65,14 +64,21 @@ export const useCartStore = create<CartState>()(
                autoClose: 2000,
             });
          },
-         setTotal: () => {
+         setTotal: async () => {
             const currentProducts = get().products;
-
             const totalPrice = setTotalData(currentProducts, "price");
             const totalQuantity = setTotalData(currentProducts, "quantity");
 
             set({ totalPrice, totalQuantity });
+
+            if (auth.currentUser)
+               await setDoc(doc(db, "users-cart", auth.currentUser?.uid), {
+                  products: currentProducts,
+               });
          },
+         setIsOpen: () => set(state => ({ isOpen: !state.isOpen })),
+         updateUsersProducts: newData => set({ products: newData }),
+         clearProducts: () => set({ products: [], totalQuantity: 0, totalPrice: 0 }),
       }),
       {
          name: "cart-storage",

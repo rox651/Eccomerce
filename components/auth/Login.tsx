@@ -10,6 +10,7 @@ import { GoogleIcon, NikeLogo } from "../icons";
 import { useLogin } from "@/hooks";
 import { auth } from "@/lib";
 import { useEffect } from "react";
+import { useCartStore } from "@/store";
 
 const Login = () => {
    const route = useRouter();
@@ -84,9 +85,9 @@ const Login = () => {
                         </label>
                      </div> */}
 
-                        <a href="#" className=" text-xs font-medium text-red-600 hover:text-red-500">
-                           Forgot your password?
-                        </a>
+                     <a href="#" className=" text-xs font-medium text-red-600 hover:text-red-500">
+                        Forgot your password?
+                     </a>
                   </div>
 
                   <button

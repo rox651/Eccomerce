@@ -19,10 +19,13 @@ export interface CartState {
    totalPrice: number;
    totalQuantity: number;
    isOpen: boolean;
-   setIsOpen: () => void;
+
    addProduct: (product: ShoesForCart | any, quantity: number, isProductFromCart: boolean) => void;
    removeProduct: (id: string) => void;
    setTotal: () => void;
+   updateUsersProducts: (newData: ShoesForCart[]) => void;
+   setIsOpen: () => void;
+   clearProducts: () => void;
 }
 
 export interface FormRegisterData {
