@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Login } from "@/components";
 
-
 const login: NextPage = () => {
    return (
       <>

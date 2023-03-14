@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const UserDropdown = () => {
    const route = useRouter();
    const [openDropDown, setOpenDropDown] = useState<boolean>(false);
-   const [user, loading] = useAuthState(auth);
+   const [user] = useAuthState(auth);
    const { clearProducts } = useCartStore();
 
    useEffect(() => {
@@ -21,10 +21,6 @@ const UserDropdown = () => {
       document.body.addEventListener("click", closeDropDown);
       return () => document.body.removeEventListener("click", closeDropDown);
    }, []);
-
-   if (loading) {
-      return <AiOutlineLoading3Quarters className=" animate-spin" />;
-   }
 
    if (!user) {
       return <Link href="/login">Login</Link>;
