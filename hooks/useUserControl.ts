@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/lib";
+import { auth, db, matchLocalAndUserProducts } from "@/lib";
 import { useCartStore } from "@/store";
 
 const useUserControl = () => {
    const [user, isLoadingUser] = useAuthState(auth);
    const [isLoadingDoc, setLoadingDoc] = useState(false);
-   const { updateUsersProducts, setTotal } = useCartStore();
+   const { products, updateUsersProducts, setTotal } = useCartStore();
 
    async function updateData() {
       //if the user doesn't exist, don't do anything
@@ -25,21 +25,23 @@ const useUserControl = () => {
             products: [],
          });
          setLoadingDoc(false);
-         updateUsersProducts([]);
+         updateUsersProducts([...products]);
          setTotal();
          return;
       }
 
       setLoadingDoc(false);
+      // Fusionar los productos del LocalStorage con los del backend y filtrar los duplicados
 
       //update it if yes
-      updateUsersProducts(cartProductsSnap.data().products);
+      updateUsersProducts(matchLocalAndUserProducts(products, cartProductsSnap.data().products));
+
       setTotal();
    }
    useEffect(() => {
       updateData();
    }, [user]);
-   return { isLoadingDoc,isLoadingUser };
+   return { isLoadingDoc, isLoadingUser };
 };
 
 export default useUserControl;
