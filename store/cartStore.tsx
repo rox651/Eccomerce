@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { toast } from "react-toastify";
 import { persist } from "zustand/middleware";
 import { auth, db, setTotalData } from "@/lib";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 export const useCartStore = create<CartState>()(
    persist(
@@ -16,14 +16,15 @@ export const useCartStore = create<CartState>()(
             //search if the product already exists
             const currentProducts = get().products;
             const findProduct = currentProducts.find(
-               currentProduct => product.id === currentProduct.id
+               currentProduct => product.title === currentProduct.title
             );
 
             if (!findProduct) {
                //add product if doesn't exist
+
                const newProduct: ShoesForCart = { ...product };
                newProduct.quantity = quantity;
-               newProduct.price = newProduct.basePrice * quantity;
+               newProduct.priceToPay = newProduct.price * quantity;
 
                set(state => ({ products: [...state.products, newProduct] }));
                toast.success("New product added", {
@@ -36,11 +37,11 @@ export const useCartStore = create<CartState>()(
 
             //update product if exists
             const updateProducts = currentProducts.map(updateProduct => {
-               if (updateProduct.id === findProduct.id) {
+               if (updateProduct.title === findProduct.title) {
                   findProduct.quantity = isProductFromCart
                      ? quantity
                      : findProduct.quantity + quantity;
-                  findProduct.price = product.basePrice * findProduct.quantity;
+                  findProduct.priceToPay = product.price * findProduct.quantity;
                   return findProduct;
                }
                return updateProduct;
@@ -54,9 +55,9 @@ export const useCartStore = create<CartState>()(
                   autoClose: 5000,
                });
          },
-         removeProduct: id => {
+         removeProduct: title => {
             const currentProducts = get().products;
-            const filterProducts = currentProducts.filter(product => product.id !== id);
+            const filterProducts = currentProducts.filter(product => product.title !== title);
 
             set({ products: filterProducts });
             toast.info("Product removed", {

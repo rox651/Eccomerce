@@ -6,16 +6,16 @@ import { useCartStore } from "@/store";
 
 const useUserControl = () => {
    const [user, isLoadingUser] = useAuthState(auth);
-   const [isLoadingDoc, setLoadingDoc] = useState(false);
+   const [isLoadingDoc, setLoadingDoc] = useState(true);
    const { products, updateUsersProducts, setTotal } = useCartStore();
 
    async function updateData() {
-      //if the user doesn't exist, don't do anything
-      if (!user) return;
+      if (!user) {
+         setLoadingDoc(false);
+         return;
+      }
 
       //verify if the products doc exist
-      setLoadingDoc(true);
-
       const cartProductsRef = doc(db, "users-cart", user.uid);
       const cartProductsSnap = await getDoc(cartProductsRef);
 
@@ -31,13 +31,10 @@ const useUserControl = () => {
       }
 
       setLoadingDoc(false);
-      // Fusionar los productos del LocalStorage con los del backend y filtrar los duplicados
-
-      //update it if yes
       updateUsersProducts(matchLocalAndUserProducts(products, cartProductsSnap.data().products));
-
       setTotal();
    }
+
    useEffect(() => {
       updateData();
    }, [user]);

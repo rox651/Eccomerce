@@ -3,30 +3,28 @@ import { motion } from "framer-motion";
 import { AiFillDelete } from "react-icons/ai";
 import { ShoesForCart } from "@/types";
 import { useQuantityInCart } from "@/hooks";
+import NotFoundImg from "@/public/images/not-found-image.png";
 
 const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
-   const { image, basePrice, name, price, size } = shoeInfo;
+   const { images, title, price, priceToPay } = shoeInfo;
    const { incrementProduct, decrementProduct, removeCartProduct } = useQuantityInCart(shoeInfo);
-
    return (
-      <div className="grid grid-cols-2 items-center rounded-lg border border-slate-700 p-2 shadow-xl">
+      <div className="grid items-center rounded-lg border border-slate-700 p-2 shadow-xl">
          <div className=" grid">
-            <h3>{name}</h3>
+            <h3>{title}</h3>
             <span>
-               <strong>Base price:</strong> ${basePrice}
+               <strong>Base price:</strong> ${price}
             </span>
             <span>
-               <strong>Sub total:</strong> ${price}
+               <strong>Sub total:</strong> ${priceToPay}
             </span>
          </div>
          <Image
             className="h-full w-full object-contain"
-            src={`https://eccomerce-api-next.vercel.app${image.src}`}
-            width={image.width}
-            height={image.height}
-            placeholder="blur"
-            blurDataURL={image.blurDataURL}
-            alt={`${name} - Cart`}
+            src={images[0] || NotFoundImg}
+            width={500}
+            height={350}
+            alt={`${title} - product-cart`}
          />
          <div className="col-span-2 my-3 grid grid-cols-3 text-center">
             <motion.button
@@ -47,7 +45,7 @@ const CartProduct = ({ shoeInfo }: { shoeInfo: ShoesForCart }) => {
             </motion.button>
             <motion.button
                whileTap={{ scale: 0.7 }}
-               className=" bg-red-500 text-white mt-2 py-1"
+               className=" mt-2 bg-red-500 py-1 text-white"
                onClick={removeCartProduct}
             >
                <AiFillDelete className=" mx-auto" />

@@ -6,7 +6,7 @@ const NikeLogo = () => {
          height="911.000000pt"
          viewBox="0 0 2560.000000 911.000000"
          preserveAspectRatio="xMidYMid meet"
-         className="h-full w-[80px]"
+         className="h-full w-[50px] lg:w-[80px]"
       >
          <g
             transform="translate(0.000000,911.000000) scale(0.100000,-0.100000)"

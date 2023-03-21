@@ -9,14 +9,16 @@ import { ShoesProducts } from "@/types";
 import { useCartStore } from "@/store";
 import { useQuantity } from "@/hooks";
 
+import NotFoundImg from "@/public/images/not-found-image.png";
+
 type productProps = InferGetStaticPropsType<typeof getStaticProps>;
 
-const Product: NextPage<productProps> = ({ id }) => {
+const Product: NextPage<productProps> = ({ title }) => {
    const { data } = useQuery({
-      queryKey: ["shoe", id],
+      queryKey: ["shoe", title],
       queryFn: getShoe,
    });
-   const title = useMemo(() => `${data?.name} - Nike Store`, [data]);
+   const seoTitle = useMemo(() => `${data?.title} - Nike Store`, [data]);
 
    const { addProduct, setTotal } = useCartStore();
    const { quantity, incrementQuantity, decrementQuantity } = useQuantity();
@@ -24,31 +26,28 @@ const Product: NextPage<productProps> = ({ id }) => {
    return (
       <>
          <Head>
-            <title>{title}</title>
+            <title>{seoTitle}</title>
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <section className="relative grid h-[calc(100vh-4rem)] w-full place-items-center bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 px-5 shadow-lg md:grid-cols-2">
+         <section className="relative grid h-[calc(100vh-4rem)] w-full place-items-center gap-10 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-500 via-slate-400 to-stone-100 px-5 py-2 shadow-lg md:grid-cols-[1.7fr_2fr]">
             <Image
-               className="h-[250px] w-full object-contain drop-shadow-2xl  md:h-full"
-               src={
-                  `https://eccomerce-api-next.vercel.app${data?.image.src}` ||
-                  "https://eccomerce-api-next.vercel.app/_next/static/media/Nike-Joyride-Cushioning-Black-1-removebg-preview.26486054.png"
-               }
+               className="h-[250px] w-full rounded-lg object-cover  drop-shadow-2xl md:h-full md:max-h-[500px]"
+               src={data?.images[0] || NotFoundImg}
                width={550}
                height={470}
-               alt={data?.name || "product undefined"}
+               alt={data?.title || "product undefined"}
                placeholder="blur"
-               blurDataURL={data?.image.blurDataURL}
+               blurDataURL={data?.images[0]}
                priority={true}
             />
             <article className="flex flex-col items-start">
                <div className="w-full  py-5 text-white">
                   <small className="text-xl font-medium">
-                     ${data?.basePrice}
+                     ${data?.price}
                      <br />
                   </small>
-                  <h3 className=" text-4xl font-bold">{data?.name}</h3>
-                  <small className="text-xl font-medium">{data?.size}</small>
+                  <h3 className=" text-4xl font-bold">{data?.title}</h3>
+                  <p className="text-2xl">{data?.description}</p>
                </div>
                <div className=" mb-5  space-x-2 font-['Eurostile'] text-2xl text-white ">
                   <motion.button
@@ -89,12 +88,12 @@ const Product: NextPage<productProps> = ({ id }) => {
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
    const queryClient = new QueryClient();
 
-   await queryClient.prefetchQuery(["shoe", params?.id], getShoe);
+   await queryClient.prefetchQuery(["shoe", params?.title], getShoe);
 
    return {
       props: {
          dehydratedState: dehydrate(queryClient),
-         id: params?.id,
+         title: params?.title,
       },
    };
 };
@@ -103,7 +102,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
    const shoePaths = shoes.map(shoe => {
       return {
          params: {
-            id: shoe.id,
+            title: shoe.title,
          },
       };
    });

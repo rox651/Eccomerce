@@ -5,15 +5,14 @@ import { useCartStore } from "@/store";
 import CartProduct from "./CartProduct";
 import MessageCart from "./MessageCart";
 
-
 const Cart = () => {
    const { products, totalPrice, totalQuantity, isOpen, setIsOpen } = useCartStore();
-   
-   const classConditional = useMemo(() => !isOpen && "hidden", [isOpen]);
+
+   const isOpenClass = useMemo(() => !isOpen && "hidden", [isOpen]);
    const isThereProducts = useMemo(() => products.length > 0, [products]);
    return (
       <section
-         className={clsx(classConditional, "fixed left-0 top-0 z-50  h-full w-full  bg-black/50 ")}
+         className={clsx(isOpenClass, "fixed left-0 top-0 z-50  h-full w-full  bg-black/50 ")}
          onClick={setIsOpen}
       >
          <article

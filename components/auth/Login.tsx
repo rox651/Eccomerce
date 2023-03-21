@@ -1,32 +1,22 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
-
 import clsx from "clsx";
-
 import { FormRegisterData } from "@/types";
+import { useAuthForms } from "@/hooks";
 import { GoogleIcon, NikeLogo } from "../icons";
-import { useLogin } from "@/hooks";
-import { auth } from "@/lib";
-import { useEffect } from "react";
-import { useCartStore } from "@/store";
+import ErrorFormMessage from "./ErrorFormMessage";
 
 const Login = () => {
-   const route = useRouter();
-   const [user] = useAuthState(auth);
-   const { mutateLogin, isLoadingLogin, mutateGoogle, isLoadingGoogle } = useLogin();
+   const { mutateLogin, isLoadingLogin, mutateGoogle, isLoadingGoogle } = useAuthForms();
 
-   const { register, handleSubmit } = useForm<FormRegisterData>();
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<FormRegisterData>();
 
    const onSubmit = handleSubmit(data => mutateLogin(data));
    const onGoogleSubmit = () => mutateGoogle();
-
-   useEffect(() => {
-      if (user) {
-         route.push("/");
-      }
-   }, [user]);
 
    return (
       <section
@@ -54,10 +44,20 @@ const Login = () => {
                      </label>
                      <div className="mt-1">
                         <input
-                           {...register("email", { required: true })}
+                           {...register("email", {
+                              required: true,
+                              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                           })}
                            type="email"
                            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         />
+                        {errors.email?.type === "required" && (
+                           <ErrorFormMessage>Email is required</ErrorFormMessage>
+                        )}
+
+                        {errors.email?.type === "pattern" && (
+                           <ErrorFormMessage>Invalid email</ErrorFormMessage>
+                        )}
                      </div>
                   </div>
 
@@ -67,24 +67,23 @@ const Login = () => {
                      </label>
                      <div className="mt-1">
                         <input
-                           {...register("password", { required: true })}
+                           {...register("password", { required: true, minLength: 6 })}
                            type="password"
                            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         />
+                        {errors.password?.type === "required" && (
+                           <ErrorFormMessage>Password is required</ErrorFormMessage>
+                        )}
+
+                        {errors.password?.type === "minLength" && (
+                           <ErrorFormMessage>
+                              Password must be more than 6 characters
+                           </ErrorFormMessage>
+                        )}
                      </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                     {/* <div className="flex items-center">
-                        <input
-                           type="checkbox"
-                           className="h-4 w-4 rounded border-gray-300 text-red-600 accent-red-400 focus:ring-red-500"
-                        />
-                        <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 ">
-                           Remember me
-                        </label>
-                     </div> */}
-
                      <a href="#" className=" text-xs font-medium text-red-600 hover:text-red-500">
                         Forgot your password?
                      </a>

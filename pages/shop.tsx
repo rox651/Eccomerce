@@ -3,7 +3,6 @@ import Head from "next/head";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { ShopProducts } from "@/components";
 import { getShoes } from "@/lib";
-import { ShoesProducts } from "@/types";
 
 type shopPage = InferGetStaticPropsType<typeof getStaticProps>;
 const shop: NextPage<shopPage> = () => {

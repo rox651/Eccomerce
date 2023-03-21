@@ -20,7 +20,7 @@ const useQuantityInCart = (shoeInfo: ShoesForCart) => {
    }, [shoeInfo]);
 
    const removeCartProduct = useCallback(() => {
-      removeProduct(shoeInfo.id);
+      removeProduct(shoeInfo.title);
       setTotal();
    }, [shoeInfo]);
 

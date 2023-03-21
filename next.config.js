@@ -2,6 +2,12 @@
 module.exports = {
    reactStrictMode: true,
    images: {
-      domains: ["https://eccomerce-api-next.vercel.app", "eccomerce-api-next.vercel.app"],
+      domains: [
+         "https://api.lorem.space/",
+         "api.lorem.space",
+         "https://api.escuelajs.co/api/v1/",
+         "rhoncus.it",
+         "static7.depositphotos.com",
+      ],
    },
 };

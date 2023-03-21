@@ -1,45 +1,24 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
-
-import { auth, createUser } from "@/lib";
+import { useAuthForms } from "@/hooks";
 import { FormRegisterData } from "@/types";
-
 import { NikeLogo } from "../icons";
+import ErrorFormMessage from "./ErrorFormMessage";
 
 const Register = () => {
-   const route = useRouter();
-   const [user] = useAuthState(auth);
-
-   const { mutate, isLoading } = useMutation({
-      mutationFn: createUser,
-      onSuccess: () =>
-         toast.success(`User created`, {
-            position: "bottom-center",
-         }),
-      onError: () =>
-         toast.error("System error, try again", {
-            position: "bottom-center",
-         }),
-   });
-   const { register, handleSubmit } = useForm<FormRegisterData>();
-   const onSubmit = handleSubmit(data => mutate(data));
-
-   useEffect(() => {
-      if (user) {
-         route.push("/");
-      }
-   }, [user]);
+   const { mutateRegister, isLoadingRegister } = useAuthForms();
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<FormRegisterData>();
+   const onSubmit = handleSubmit(data => mutateRegister(data));
 
    return (
       <section
          className={clsx(
-            isLoading && "opacity-30",
+            isLoadingRegister && "opacity-30",
             "flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8"
          )}
       >
@@ -61,10 +40,20 @@ const Register = () => {
                      </label>
                      <div className="mt-1">
                         <input
-                           {...register("email", { required: true })}
+                           {...register("email", {
+                              required: true,
+                              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                           })}
                            type="email"
                            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         />
+                        {errors.email?.type === "required" && (
+                           <ErrorFormMessage>Email is required</ErrorFormMessage>
+                        )}
+
+                        {errors.email?.type === "pattern" && (
+                           <ErrorFormMessage>Invalid email</ErrorFormMessage>
+                        )}
                      </div>
                   </div>
 
@@ -74,10 +63,20 @@ const Register = () => {
                      </label>
                      <div className="mt-1">
                         <input
-                           {...register("password", { required: true })}
+                           {...register("password", { required: true, minLength: 6 })}
+                           aria-invalid={errors.password ? "true" : "false"}
                            type="password"
                            className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         />
+                        {errors.password?.type === "required" && (
+                           <ErrorFormMessage>Password is required</ErrorFormMessage>
+                        )}
+
+                        {errors.password?.type === "minLength" && (
+                           <ErrorFormMessage>
+                              Password must be more than 6 characters
+                           </ErrorFormMessage>
+                        )}
                      </div>
                   </div>
 

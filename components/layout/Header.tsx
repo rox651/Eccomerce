@@ -9,7 +9,7 @@ const Header = () => {
          <Link href="/">
             <NikeLogo />
          </Link>
-         <nav className="flex flex-1 justify-center gap-5 font-medium">
+         <nav className="flex flex-1 justify-center gap-5 text-sm md:text-base font-medium">
             <Link href="/">Home</Link>
             <Link href="/shop">Shop</Link>
          </nav>

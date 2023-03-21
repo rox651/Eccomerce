@@ -4,10 +4,10 @@ import CardProduct from "./CardProduct";
 const ShopProducts = ({ shoes }: { shoes: ShoesProducts[] }) => {
    return (
       <section className="min-h-screen p-5">
-         <h2 className="text-center text-xl my-5">Shop</h2>
-         <div className="mx-auto grid h-full max-w-7xl gap-5 grid-cols-2 lg:grid-cols-4 ">
+         <h2 className="my-5 text-center text-xl">Shop</h2>
+         <div className="mx-auto grid h-full max-w-7xl grid-cols-2 gap-5 lg:grid-cols-4 ">
             {shoes.map(shoe => (
-               <CardProduct key={shoe.id} shoeInfo={shoe} />
+               <CardProduct key={`shoe-${shoe.id}-${shoe.title}`} shoeInfo={shoe} />
             ))}
          </div>
       </section>

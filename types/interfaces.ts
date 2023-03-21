@@ -1,17 +1,18 @@
-import { StaticImageData } from "next/image";
 
 export interface ShoesProducts {
-   id: string;
-   name: string;
-   color: string;
-   basePrice: number;
-   size: string;
-   image: StaticImageData;
+   id: number;
+   title: string;
+   price: number;
+   description: string;
+   images:string[];
+   creationAt: Date;
+   updatedAt: Date;
+   category: Category;
 }
 
 export interface ShoesForCart extends ShoesProducts {
    quantity: number;
-   price: number;
+   priceToPay: number;
 }
 
 export interface CartState {
@@ -31,4 +32,16 @@ export interface CartState {
 export interface FormRegisterData {
    email: string;
    password: string;
+}
+
+export interface Category {
+   id: number;
+   name: Name;
+   image: string;
+   creationAt: Date;
+   updatedAt: Date;
+}
+
+export enum Name {
+   Shoes = "Shoes",
 }
